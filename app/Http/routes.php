@@ -11,11 +11,10 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::controller('login', 'LoginController');
 
-Route::get('home', 'HomeController@index');
-
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
+Route::group(['prefix' => 'app'], function () {
+    /* User Route Start */
+    Route::any('register/user', 'UserController@register');
+    /* User Route End */
+});
