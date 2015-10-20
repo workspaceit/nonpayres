@@ -12,18 +12,18 @@ namespace App\Http\Controllers\DataSet;
 class AppCredential {
     public $id;
     public $userName;
-    public $password;
+    //public $password;
     public $user;
     public $createdDate;
 
     public function __construct($user) {
-        $userInfo          = new UserInfo($user);
-        $login             = $user->login;
-        $this->id          = $login->id;
-        $this->userName    = $login->user_name;
-        $this->password    = $login->password;
-        $this->user        = $userInfo;//->userInfo;
-        $this->createdDate = (array)$login->created_at;
-        $this->createdDate = $this->createdDate['date'];
+            $userInfo       = new UserInfo($user);
+            $login          = $user->login;
+            $this->id       = $login->id;
+            $this->userName = $login->user_name;
+            //$this->password    = $login->password;
+            $this->user        = $userInfo;
+            $this->createdDate = (array)$login->created_at;
+            $this->createdDate = $this->createdDate['date'];
     }
 }

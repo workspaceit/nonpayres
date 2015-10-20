@@ -7,21 +7,25 @@
  * Date     : 10/19/15 - 4:13 PM
  */
 
-namespace app\Http\Controllers;
+namespace App\Http\Controllers;
 
 
 class Response {
     public $status       = FALSE;
     public $massage      = NULL;
-    public $ResponseData = [];
+    public $ResponseData = NULL;
+
+    public function __construct() {
+        $this->ResponseData = new \stdClass();
+    }
 
     public function getResponse() {
         return [
             'responseStat' => [
-                'status'  => $this->status,
-                'massage' => $this->massage,
+                'status' => $this->status,
+                'msg'    => $this->massage,
             ],
-            'ResponseData' => $this->ResponseData,
+            'responseData' => $this->ResponseData,
         ];
     }
 }

@@ -16,11 +16,12 @@ class CreateClientsTable extends Migration {
             $table->string('phone_number', 20)->unique();
             $table->integer('post_code');
             $table->string('pickup_location');
-            $table->boolean('non_payers');
+            $table->boolean('non_payer');
             $table->tinyInteger('star');
             $table->string('time_of_incident');
             $table->string('incident_note');
             $table->integer('advice_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
