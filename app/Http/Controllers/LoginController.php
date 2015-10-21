@@ -44,6 +44,12 @@ class LoginController extends Controller {
 
         $userLogin = Login::where('access_token', '=', $accessToken['access_token'])->first();
 
+        if (!$userLogin) {
+            $response->massage = "Login failed wrong credential !";
+
+            return $response->getResponse();
+        }
+
         if ($userLogin->active == 0) {
             $response->massage = "Your account yet not activated";
 
@@ -68,7 +74,6 @@ class LoginController extends Controller {
 
         return $response->getResponse();
     }
-
 
     public function postLogin(Request $request) {
         $accessToken = $request->only(['user_name', 'password']);
@@ -121,5 +126,4 @@ class LoginController extends Controller {
 
         return $response->getResponse();
     }
-
 }

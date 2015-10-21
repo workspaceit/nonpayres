@@ -86,6 +86,7 @@ class ClientController extends Controller {
         }
 
         $clients = Client::with('advice')
+                         ->where('user_id', '=', Auth::user()->user_id)
                          ->where(function ($q) use ($phoneNumber, $postCode) {
                              if ($phoneNumber) {
                                  $phoneNumber .= '%';
