@@ -12,6 +12,8 @@ class Client extends Model {
         'pickup_location',
         'non_payer',
         'stars',
+        'excellent_customer',
+        'excellent_stars',
         'time_of_incident',
         'incident_note',
         'advice_id',

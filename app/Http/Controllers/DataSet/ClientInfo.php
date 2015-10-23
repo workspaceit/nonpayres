@@ -28,7 +28,7 @@ class ClientInfo {
      */
     public $pickupLocation;
     /**
-     * @var String
+     * @var int
      */
     public $nonPayer;
     /**
@@ -44,19 +44,29 @@ class ClientInfo {
      */
     public $stars;
     /**
+     * @var int
+     */
+    public $excellentCustomer;
+    /**
+     * @var int
+     */
+    public $excellentStars;
+    /**
      * @var AdviceDetails
      */
     public $advice;
 
     public function __construct() {
-        $this->phoneNumber    = NULL;
-        $this->name           = NULL;
-        $this->postCode       = NULL;
-        $this->pickupLocation = NULL;
-        $this->nonPayer       = NULL;
-        $this->timeOfIncident = NULL;
-        $this->incidentNote   = NULL;
-        $this->stars          = NULL;
-        $this->advice         = new \stdClass();
+        $this->phoneNumber       = NULL;
+        $this->name              = NULL;
+        $this->postCode          = NULL;
+        $this->pickupLocation    = NULL;
+        $this->nonPayer          = NULL;
+        $this->stars             = NULL;
+        $this->excellentCustomer = NULL;
+        $this->excellentStars    = NULL;
+        $this->timeOfIncident    = NULL;
+        $this->incidentNote      = NULL;
+        $this->advice            = new \stdClass();
     }
 }

@@ -21,14 +21,16 @@ class ClientController extends Controller {
         }
 
         $rule      = [
-            'phone_number'     => 'required|unique:clients',
+            'phone_number'       => 'required|unique:clients',
             //'name'             => 'required',
-            'post_code'        => 'required',
-            'pickup_location'  => 'required',
-            'non_payer'        => 'required',
+            'post_code'          => 'required',
+            'pickup_location'    => 'required',
+            'non_payer'          => 'required',
             //'stars'            => 'required',
-            'time_of_incident' => 'required',
-            'incident_note'    => 'required',
+            'excellent_customer' => 'required',
+            //'excellent_stars'  => 'required',
+            'time_of_incident'   => 'required',
+            'incident_note'      => 'required',
             //'advice_id'        => 'required',
         ];
         $validator = Validator::make($request->input(), $rule);
@@ -51,17 +53,19 @@ class ClientController extends Controller {
             return $response->getResponse();
         }
 
-        $clientDataSet                 = new ClientInfo();
-        $advice                        = new AdviceDetails($client->advice);
-        $clientDataSet->name           = $client->name;
-        $clientDataSet->phoneNumber    = $client->phone_number;
-        $clientDataSet->pickupLocation = $client->pickup_location;
-        $clientDataSet->postCode       = $client->post_code;
-        $clientDataSet->nonPayer       = $client->non_payer;
-        $clientDataSet->timeOfIncident = $client->time_of_incident;
-        $clientDataSet->stars          = $client->stars;
-        $clientDataSet->incidentNote   = $client->incident_note;
-        $clientDataSet->advice         = $advice;
+        $clientDataSet                    = new ClientInfo();
+        $advice                           = new AdviceDetails($client->advice);
+        $clientDataSet->name              = $client->name;
+        $clientDataSet->phoneNumber       = $client->phone_number;
+        $clientDataSet->pickupLocation    = $client->pickup_location;
+        $clientDataSet->postCode          = $client->post_code;
+        $clientDataSet->nonPayer          = $client->non_payer;
+        $clientDataSet->stars             = $client->stars;
+        $clientDataSet->excellentCustomer = $client->excellent_customer;
+        $clientDataSet->excellentStars    = $client->excellent_stars;
+        $clientDataSet->timeOfIncident    = $client->time_of_incident;
+        $clientDataSet->incidentNote      = $client->incident_note;
+        $clientDataSet->advice            = $advice;
 
         $response->massage      = "Client Added Successfully";
         $response->status       = TRUE;
@@ -71,6 +75,14 @@ class ClientController extends Controller {
     }
 
     public function search(Request $request) {
+        $response = new Response();
+
+        if (!Auth::user()) {
+            $response->massage = "Login time out !";
+
+            return $response->getResponse();
+        }
+
         $input       = $request->input();
         $phoneNumber = @$input['phone_number'];
         $postCode    = @$input['post_code'];
@@ -83,6 +95,8 @@ class ClientController extends Controller {
 
         if (!$offset) {
             $offset = 0;
+        } else if ($offset > 0) {
+            $offset *= $limit;
         }
 
         $clients = Client::with('advice')
@@ -106,21 +120,22 @@ class ClientController extends Controller {
         $searchResult = new \ArrayObject();
 
         foreach ($clients as $client) {
-            $clientDataSet                 = new ClientInfo();
-            $advice                        = new AdviceDetails($client->advice);
-            $clientDataSet->name           = $client->name;
-            $clientDataSet->phoneNumber    = $client->phone_number;
-            $clientDataSet->pickupLocation = $client->pickup_location;
-            $clientDataSet->postCode       = $client->post_code;
-            $clientDataSet->nonPayer       = $client->non_payer;
-            $clientDataSet->timeOfIncident = $client->time_of_incident;
-            $clientDataSet->incidentNote   = $client->incident_note;
-            $clientDataSet->stars          = $client->stars;
-            $clientDataSet->advice         = $advice;
+            $clientDataSet                    = new ClientInfo();
+            $advice                           = new AdviceDetails($client->advice);
+            $clientDataSet->name              = $client->name;
+            $clientDataSet->phoneNumber       = $client->phone_number;
+            $clientDataSet->pickupLocation    = $client->pickup_location;
+            $clientDataSet->postCode          = $client->post_code;
+            $clientDataSet->nonPayer          = $client->non_payer;
+            $clientDataSet->stars             = $client->stars;
+            $clientDataSet->excellentCustomer = $client->excellent_customer;
+            $clientDataSet->excellentStars    = $client->excellent_stars;
+            $clientDataSet->timeOfIncident    = $client->time_of_incident;
+            $clientDataSet->incidentNote      = $client->incident_note;
+            $clientDataSet->advice            = $advice;
             $searchResult->append($clientDataSet);
         }
 
-        $response               = new Response();
         $response->status       = TRUE;
         $response->massage      = NULL;
         $response->ResponseData = (Array)$searchResult;

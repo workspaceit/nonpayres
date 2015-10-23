@@ -67,4 +67,7 @@ class UserController extends Controller {
         return $this->response->getResponse();
     }
 
+    public function sendActivationCode(){
+
+    }
 }
