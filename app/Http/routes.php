@@ -1,6 +1,7 @@
 <?php
 
 Route::any('', 'UserController@currentUser');
+Route::any('verify/email/{email}/{token}', 'EmailController@verifyEmail');
 
 Route::group(['prefix' => 'app'], function () {
     Route::post('register/user', 'UserController@register');
