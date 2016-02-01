@@ -103,13 +103,15 @@ class ClientController extends Controller {
                          ->where('user_id', '=', Auth::user()->user_id)
                          ->where(function ($q) use ($phoneNumber, $postCode) {
                              if ($phoneNumber) {
-                                 $phoneNumber .= '%';
-                                 $q->where('phone_number', 'like', $phoneNumber);
+                                 //$phoneNumber .= '%';
+                                 //$q->where('phone_number', 'like', $phoneNumber);
+                                 $q->where('phone_number', '=', $phoneNumber);
                              }
 
                              if ($postCode) {
-                                 $postCode .= '%';
-                                 $q->where('post_code', 'like', $postCode);
+                                 //$postCode .= '%';
+                                 //$q->where('post_code', 'like', $postCode);
+                                 $q->where('post_code', '=', $postCode);
                              }
                          })
                          ->orderBy('name', 'ASC')
