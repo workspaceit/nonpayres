@@ -1,5 +1,5 @@
 <?php
-
+Route::post('/remote/secure-channel/get-auth-credential-by-user-name', 'Secure\ExchangeTokenController@getAccessToken');
 Route::any('', 'UserController@currentUser');
 Route::any('verify/email/{email}/{token}', 'EmailController@verifyEmail');
 
